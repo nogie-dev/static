@@ -1,0 +1,14 @@
+{{#each info}}
+<span>{{no}}</span>
+<span>{{name}}</span>
+<span>{{title}}</span>
+<span>{{context}}</span>
+<form metnod="POST" action="../del/{{no}}">
+    {{!-- <input type="hidden" value="{{no}}"> --}}
+    <input type="submit" value="del">
+</form>
+<form metnod="POST" action="../mod/{{no}}">
+    {{!-- <input type="hidden" value="{{no}}"> --}}
+    <input type="submit" value="mod">
+</form>
+{{/each}}
