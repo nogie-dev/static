@@ -1,0 +1,10 @@
+<form method="POST">
+    {{#each info}}
+    <span>{{no}}</span>
+    <span>{{name}}</span>
+    <input type="hidden" name="name" value={{name}}>
+    <input type="text" value="{{title}}" name="title">
+    <input type="textarea" value="{{context}}" name="context">
+    <input type="submit" value="mod">
+    {{/each}}
+</form>

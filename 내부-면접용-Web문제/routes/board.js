@@ -9,24 +9,32 @@ router.get('/',(req,res)=>{
         //console.log(req.sessionID)
         query.getBoardList()
         .then((queryRes)=>{
-            res.json(queryRes)
+            res.render('board_list',{board_list:queryRes})
         })
     }
 })
 
-router.get('/:no',(req,res)=>{
+router.get('/view/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
         query.detailViewBoard(number)
         .then((queryRes)=>{
-            res.json(queryRes)
+            res.render('board_view',{info:queryRes})
         })
     }
 })
 
-router.post('/',(req,res)=>{
+router.get('/write',(req,res)=>{
+    if(!req.session.user){
+        res.json({"status":"401","msg":"Unauthorized"})
+    }else{
+        res.render('board_write',{username:req.session.user.id})
+    }
+})
+
+router.post('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
@@ -39,7 +47,19 @@ router.post('/',(req,res)=>{
     }
 })
 
-router.patch('/:no',(req,res)=>{
+router.get('/mod/:no',(req,res)=>{
+    if(!req.session.user){
+        res.json({"status":"401","msg":"Unauthorized"})
+    }else{
+        const number=req.params.no
+        query.detailViewBoard(number)
+        .then((queryRes)=>{
+            res.render('board_mod',{info:queryRes})
+        })
+    }
+})
+
+router.post('/mod/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
@@ -47,19 +67,19 @@ router.patch('/:no',(req,res)=>{
         const {name,title,context}=req.body
         query.updateBoard(number,name,title,context)
         .then((queryRes)=>{
-            res.json(queryRes)
+            res.redirect(`/board/view/${number}`)
         })
     }
 })
 
-router.delete('/:no',(req,res)=>{
+router.get('/del/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
         query.deleteBoard(number)
         .then((queryRes)=>{
-            res.json(queryRes)
+            res.redirect('/board')
         })
     }
 })
