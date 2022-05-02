@@ -11,6 +11,11 @@ router.post('/register', (req, res, next)=>{
   })
 });
 
+//login 부분===================================================
+router.get('/login',(req,res)=>{
+  res.render('login_form')
+})
+
 router.post('/login', (req, res, next)=>{
   let {id,password}=req.body
 
@@ -27,16 +32,19 @@ router.post('/login', (req, res, next)=>{
           authorized:true
         }
         //res.json({'loginResult':queryRes})
-        res.json({"status":"tmp","msg":"success login"})
+        //res.json({"status":"tmp","msg":"success login"})
+        res.redirect('../')
       }else{ 
         //로그인 실패 시
         
         //res.json({'loginResult':queryRes})
-        res.json({"status":"tmp","msg":"failed logout"})
+        //res.json({"status":"tmp","msg":"failed logout"})
+        res.redirect('../')
       }
     })
   }
 });
+//===================================================
 
 router.get('/logout', (req, res, next)=>{
   req.session.destroy(function(err){
