@@ -54,8 +54,8 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  //res.render('error')
-  res.json({"status":"500", "msg":"Server Side Error"})
+  res.render('error')
+  //res.json({"status":"500", "msg":"Server Side Error"})
   //res.render('error');
 });
 

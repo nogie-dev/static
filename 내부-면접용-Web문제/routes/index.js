@@ -3,15 +3,12 @@ const app = require('../app');
 var router = express.Router();
 
 router.get('/',(req,res)=>{
-    const sessionJudge=false
+    //sessionJudge=false
+    console.log(req.session.user)
     if(!req.session.user){
-        //console.log(req.session.user)
-        //console.log(JSON.stringify(sessionJudge))
-        res.render('main',{isLogin:sessionJudge})
+        res.render('main',{isLogin:false})
     }else{
-        sessionJudge=true
-        JSON.stringify(sessionJudge)
-        res.render('main',{isLogin:sessionJudge})
+        res.render('main',{isLogin:true})
     }
 })
 
