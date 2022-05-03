@@ -31,12 +31,12 @@ module.exports={
     userRegister:async function(id,password,nickname){
         try{
             let checkId=false
-            this.checkDupId(id).then((result)=>checkId=result)
+            checkId=await this.checkDupId(id).then((result)=>result)
+            console.log(checkId)
 
             let checkName=false
-            this.checkDupName(nickname).then((result)=>checkName=result)
-
-            console.log(id,password,nickname)
+            checkName=await this.checkDupName(nickname).then((result)=>result)
+            console.log(checkName)
 
             if(checkId==false&&checkName==false){
                 await conn.then((connection)=>connection.execute("insert into users(nickname,id,password) values(?,?,?)",[nickname,id,password]))
