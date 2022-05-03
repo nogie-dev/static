@@ -33,7 +33,7 @@ app.use(session({
   cookie: {secure: false}
 }))
 
-//app.use('/account',express.static(path.join(__dirname, 'public')));
+app.use('/static',express.static(path.join(__dirname, 'public')));
 console.log(__dirname);
 
 app.use('/', indexRouter);

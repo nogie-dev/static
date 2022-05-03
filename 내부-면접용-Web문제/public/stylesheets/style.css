@@ -117,11 +117,16 @@ body {
   width: 100px;
   height: 100px;
   margin: 40px auto;
-  background-color: #bc252a;
-  color: #fff;
+  background-color: rgb(230, 80, 80);
+  /* color: #fff; */
   font-size: 2.5rem;
-  border: none;
+  border-style: none;
+  border: 2px solid;
+  /* border-width: 5px; */
   border-radius: 30px;
+  border-color: white;
+  color:white;
+  /* border-color: gray; */
   cursor: pointer;
   transition: .3s linear;
 }
@@ -147,7 +152,7 @@ body {
 }
 
 .btn:disabled {
-  background-color: transparent;
-  color: #ddd;
-  border: 2px solid;
+  background-color: gray;
+  color: white;
+  border-color: white;
 }
