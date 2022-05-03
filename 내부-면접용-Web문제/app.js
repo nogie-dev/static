@@ -11,8 +11,6 @@ const exphbs  = require('express-handlebars');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var boardRouter=require('./routes/board.js');
-//const { transformArguments } = require('@node-redis/search/dist/commands/AGGREGATE');
-//var accountRouter=require('./routes/account.js');
 
 var app = express();
 
@@ -39,24 +37,29 @@ console.log(__dirname);
 app.use('/', indexRouter);
 app.use("/board", boardRouter);
 app.use("/users", usersRouter);
-// app.use("/account", accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  next(createError(404));
+  res.status(404).render('error/404');
 });
+
+app.use(function(req, res, next) {
+  res.status(500).render('error/500');
+});
+
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error')
-  //res.json({"status":"500", "msg":"Server Side Error"})
-  //res.render('error');
-});
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error')
+// });
 
 module.exports = app;
