@@ -38,10 +38,16 @@ router.post('/write',(req,res)=>{
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const {name,title,context}=req.body
-        query.createBoard(name,title,context)
-        .then((queryRes)=>{
-            res.json(queryRes)
-        })
+
+        if(title!=''&&context!=''){
+            query.createBoard(name,title,context)
+            .then((queryRes)=>{
+                //res.json(queryRes)
+                res.redirect('/board')
+            })
+        }else{
+            res.render('board/board_write',{empty:true})
+        }
     }
 })
 
