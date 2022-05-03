@@ -3,7 +3,6 @@ const app = require('../app');
 var router = express.Router();
 
 router.get('/',(req,res)=>{
-    //sessionJudge=false
     console.log(req.session.user)
     if(!req.session.user){
         res.render('main',{isLogin:false})

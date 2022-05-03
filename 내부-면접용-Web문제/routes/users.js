@@ -2,6 +2,10 @@ var express = require('express');
 const query=require('../db/mysql_query')
 var router = express.Router();
 
+router.get('/register',(req,res)=>{
+  res.render('users/register_form')
+})
+
 router.post('/register', (req, res, next)=>{
   let {id,password,nickname}=req.body
 
@@ -11,9 +15,8 @@ router.post('/register', (req, res, next)=>{
   })
 });
 
-//login 부분===================================================
 router.get('/login',(req,res)=>{
-  res.render('login_form')
+  res.render('users/login_form')
 })
 
 router.post('/login', (req, res, next)=>{
@@ -25,26 +28,17 @@ router.post('/login', (req, res, next)=>{
     query.userLogin(id,password)
     .then((queryRes)=>{
       if(queryRes==true){ 
-        //로그인 성공 시
-
         req.session.user={
           id:id,
           authorized:true
         }
-        //res.json({'loginResult':queryRes})
-        //res.json({"status":"tmp","msg":"success login"})
         res.redirect('../')
       }else{ 
-        //로그인 실패 시
-        
-        //res.json({'loginResult':queryRes})
-        //res.json({"status":"tmp","msg":"failed logout"})
         res.redirect('../')
       }
     })
   }
 });
-//===================================================
 
 router.get('/logout', (req, res, next)=>{
   req.session.destroy(function(err){

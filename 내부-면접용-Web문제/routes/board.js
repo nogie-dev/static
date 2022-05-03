@@ -6,10 +6,9 @@ router.get('/',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        //console.log(req.sessionID)
         query.getBoardList()
         .then((queryRes)=>{
-            res.render('board_list',{board_list:queryRes})
+            res.render('board/board_list',{board_list:queryRes})
         })
     }
 })
@@ -21,7 +20,7 @@ router.get('/view/:no',(req,res)=>{
         const number=req.params.no
         query.detailViewBoard(number)
         .then((queryRes)=>{
-            res.render('board_view',{info:queryRes})
+            res.render('board/board_view',{info:queryRes})
         })
     }
 })
@@ -30,7 +29,7 @@ router.get('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        res.render('board_write',{username:req.session.user.id})
+        res.render('board/board_write',{username:req.session.user.id})
     }
 })
 
@@ -38,14 +37,15 @@ router.post('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        const {name,title,context}=req.body //req.body 의 key값과 변수의 이름이 동일해야 함
+        const {name,title,context}=req.body
         query.createBoard(name,title,context)
         .then((queryRes)=>{
             res.json(queryRes)
         })
-        //res.json({name,title,context})
     }
 })
+
+//mod, del session id 와 writer id 동일한 지 확인 필요함
 
 router.get('/mod/:no',(req,res)=>{
     if(!req.session.user){
@@ -54,7 +54,7 @@ router.get('/mod/:no',(req,res)=>{
         const number=req.params.no
         query.detailViewBoard(number)
         .then((queryRes)=>{
-            res.render('board_mod',{info:queryRes})
+            res.render('board/board_mod',{info:queryRes})
         })
     }
 })
