@@ -1,7 +1,31 @@
-<form method="POST">
-    <span>{{{username}}}</span>
-    <input type="hidden" name="name" value={{{username}}}>
-    <input type="text" placeholder="title" name="title">
-    <input type="textarea" placeholder="context" name="context">
-    <input type="submit" value="write">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Form Design</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="../../static/stylesheets/style.css">
+    </head>
+    {{#if empty}}
+        <script>alert('title or context is empty')</script>
+    {{/if}}
+    <body>
+        <form method="POST" class="board-form">
+            <h1>Write</h1>
+            
+            <h3>writer : {{{username}}}</h3>
+
+            <input type="hidden" name="name" value={{{username}}}>
+
+            <div class="textb">
+                <input type="text" placeholder="title" name="title">
+            </div>
+
+            <div class="text_board">
+                <input type="text" placeholder="context" name="context">
+            </div>
+
+            <button class="btn-board">작성</button>
+        </form>
+    </body>
