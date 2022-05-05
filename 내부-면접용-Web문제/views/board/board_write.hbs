@@ -26,6 +26,15 @@
                 <input type="text" placeholder="context" name="context">
             </div>
 
-            <button class="btn-board">작성</button>
+            <input type="submit" class="btn-board" value='작성'></button>
+            <input type="submit" class="btn-board" onclick='return submit2(this.form);' value='미리보기'></button>
         </form>
     </body>
+
+<script> 
+  function submit2(frm) { 
+    frm.action='/board/preview'; 
+    frm.submit(); 
+    return true; 
+  } 
+</script> 

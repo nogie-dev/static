@@ -25,6 +25,16 @@ router.get('/view/:no',(req,res)=>{
     }
 })
 
+router.post('/preview',(req,res)=>{
+    if(!req.session.user){
+        res.json({"status":"401","msg":"Unauthorized"})
+    }else{
+        let tmp=req.body
+        console.log(tmp)
+        res.render('board/board_preview',tmp)
+    }
+})
+
 router.get('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
