@@ -1,5 +1,10 @@
 {{#if isLogin}}
-<h1>hello</h1>
+    <h1>hello {{username}}</h1>
+    {{#if isAdmin}}
+        <h1>You are Admin</h1>
+    {{else}}
+        <h1>You are not admin</h1>
+    {{/if}}
 {{else}}
 <h1>not logined</h1>
 {{/if}}

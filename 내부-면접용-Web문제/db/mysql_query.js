@@ -66,6 +66,17 @@ module.exports={
         }
     },
 
+    adminCheck:async function(id){
+        try{
+            let [rows,field]=await conn.then((connection)=>connection.query("select is_admin from users where id=?",[id]));
+            console.log(rows)
+            return rows
+        }catch(error){
+            console.log(error)
+            return {"status":"400","msg":"bad request"}
+        }
+    },
+
     getBoardList:async function(){
         try{
             let [rows,field]=await conn.then((connection)=>connection.query("select * from board"));
