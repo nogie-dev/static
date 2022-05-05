@@ -3,20 +3,32 @@ const query=require('../db/mysql_query')
 var router = express.Router();
 
 router.get('/register',(req,res)=>{
-  res.render('users/register_form')
+  if(req.session.user){
+    res.json({"status":"tmp","msg":"already exist your session"})
+  }else{
+    res.render('users/register_form')
+  }
 })
 
 router.post('/register', (req, res, next)=>{
-  let {id,password,nickname}=req.body
+  if(req.session.user){
+    res.json({"status":"tmp","msg":"already exist your session"})
+  }else{
+    let {id,password,nickname}=req.body
 
-  query.userRegister(id,password,nickname)
-  .then((queryRes)=>{
-    res.json(queryRes)
-  })
+    query.userRegister(id,password,nickname)
+    .then((queryRes)=>{
+      res.json(queryRes)
+    })
+  }
 });
 
 router.get('/login',(req,res)=>{
-  res.render('users/login_form')
+  if(req.session.user){
+    res.json({"status":"tmp","msg":"already exist your session"})
+  }else{
+    res.render('users/login_form')
+  }
 })
 
 router.post('/login', (req, res, next)=>{
@@ -41,10 +53,14 @@ router.post('/login', (req, res, next)=>{
 });
 
 router.get('/logout', (req, res, next)=>{
-  req.session.destroy(function(err){
-    if(err) throw err
-  })
-  res.json({"status":"tmp","msg":"success logout"})
+  if(!req.session.user){
+    res.json({"status":"401","msg":"Unauthorized"})
+  }else{
+    req.session.destroy(function(err){
+      if(err) throw err
+    })
+    res.json({"status":"tmp","msg":"success logout"})
+  } 
 })
 
 module.exports = router;
