@@ -30,7 +30,6 @@ router.post('/preview',(req,res)=>{
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         let tmp=req.body
-        console.log(tmp)
         res.render('board/board_preview',tmp)
     }
 })
@@ -52,7 +51,6 @@ router.post('/write',(req,res)=>{
         if(title!=''&&context!=''){
             query.createBoard(name,title,context)
             .then((queryRes)=>{
-                //res.json(queryRes)
                 res.redirect('/board')
             })
         }else{
@@ -62,15 +60,24 @@ router.post('/write',(req,res)=>{
 })
 
 //mod, del session id 와 writer id 동일한 지 확인 필요함
+//게시물에서 id를 가져와 세션id와 같으면 통과 아니면 빠꾸
 
 router.get('/mod/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
-        query.detailViewBoard(number)
-        .then((queryRes)=>{
-            res.render('board/board_mod',{info:queryRes})
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                const number=req.params.no
+                query.detailViewBoard(number)
+                .then((queryRes)=>{
+                    res.render('board/board_mod',{info:queryRes})
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })
@@ -81,9 +88,16 @@ router.post('/mod/:no',(req,res)=>{
     }else{
         const number=req.params.no
         const {name,title,context}=req.body
-        query.updateBoard(number,name,title,context)
-        .then((queryRes)=>{
-            res.redirect(`/board/view/${number}`)
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                query.updateBoard(number,name,title,context)
+                    .then((queryRes)=>{
+                    res.redirect(`/board/view/${number}`)
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })
@@ -93,9 +107,16 @@ router.get('/del/:no',(req,res)=>{
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
-        query.deleteBoard(number)
-        .then((queryRes)=>{
-            res.redirect('/board')
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                query.deleteBoard(number)
+                .then((queryRes)=>{
+                    res.redirect('/board')
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })

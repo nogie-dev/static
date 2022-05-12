@@ -59,7 +59,6 @@ module.exports={
            
            if(rows[0]){judge=true}
            return judge
-           //console.log(rows)
         }catch(error){
             console.log(error)
             return {"status":"400","msg":"bad request"}
@@ -69,8 +68,7 @@ module.exports={
     adminCheck:async function(id){
         try{
             let [rows,field]=await conn.then((connection)=>connection.query("select is_admin from users where id=?",[id]));
-            console.log(rows)
-            return rows
+            return rows[0]
         }catch(error){
             console.log(error)
             return {"status":"400","msg":"bad request"}
@@ -124,6 +122,16 @@ module.exports={
         try{
             await conn.then((connection)=>connection.execute("update board set name=?, title=?, context=? where no=?",[name,title,context,number]))
             return {"status":"200", "msg":"success updated content"}
+        }catch(error){
+            console.log(error)
+            return {"status":"400","msg":"bad request"}
+        }
+    },
+
+    getBoardWriterName:async function(number){
+        try{
+            let [rows,field]=await conn.then((connection)=>connection.query("select name from board where no=?",[number]))
+            return rows[0]
         }catch(error){
             console.log(error)
             return {"status":"400","msg":"bad request"}
