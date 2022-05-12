@@ -59,9 +59,6 @@ router.post('/write',(req,res)=>{
     }
 })
 
-//mod, del session id 와 writer id 동일한 지 확인 필요함
-//게시물에서 id를 가져와 세션id와 같으면 통과 아니면 빠꾸
-
 router.get('/mod/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})

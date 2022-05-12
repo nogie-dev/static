@@ -5,7 +5,6 @@ const { adminCheck } = require('../db/mysql_query');
 var router = express.Router();
 
 router.get('/',(req,res)=>{
-    //console.log(req.session.user)
     if(!req.session.user){
         res.render('main',{isLogin:false})
     }else{
@@ -18,9 +17,5 @@ router.get('/',(req,res)=>{
         })
     }
 })
-
-// router.post('/login',(req.res)=>{
-
-// })
 
 module.exports = router;
