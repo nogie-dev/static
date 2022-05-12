@@ -1,4 +1,5 @@
-# commit message 작성법
+# CSS 출처
 ```
-    몰?루
+    arahansa : 
+    https://github.com/arahansa/go_pureboard/blob/master/view/static/css/style_board.css
 ```
