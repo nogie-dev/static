@@ -1,0 +1,19 @@
+create table board(
+no int unsigned not null primary key auto_increment,
+name varchar(10) not null,
+title varchar(30) not null,
+context varchar(500) not null
+);
+
+create table users(
+user_no int unsigned not null primary key auto_increment,
+nickname varchar(10) not null,
+id varchar(20) not null,
+password varchar(20) not null,
+is_admin boolean not null default 0 
+);
+
+//insert admin account
+insert into users(nickname,id,password,is_admin) value("admin","admin","##########blocked#########",1);
+
+
