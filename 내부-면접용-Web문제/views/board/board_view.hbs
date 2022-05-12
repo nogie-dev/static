@@ -12,26 +12,23 @@
             <table>
                 {{#each info}}
                 <tr>
-                    <td>
-                        <span>no : {{no}}</span>
-                    </td>
-
-                    <td>
-                        <span>username : {{name}}</span>
-                    </td>
-                    
+                    <th>번호</th>
+                    <td><span>no : {{no}}</span></td>
                 </tr>
 
                 <tr>
-                    <td>
-                        <span>{{title}}</span>
-                    </td>
+                    <th>작성자</th>
+                    <td><span>{{name}}</span></td>                    
                 </tr>
 
                 <tr>
-                    <td>
-                        <span>{{context}}</span>
-                    </td>
+                    <th>제목</th>
+                    <td><span>{{title}}</span></td> 
+                </tr>
+
+                <tr>
+                    <th>본문</th>
+                    <td><span>{{context}}</span></td>
                 </tr>
 
                 <tr>
@@ -41,9 +38,6 @@
                             <input type="submit" value="del">
                         </form>
                     </td>
-                </tr>
-
-                <tr>
                     <td>
                         <form metnod="POST" action="../mod/{{no}}">
                             {{!-- <input type="hidden" value="{{no}}"> --}}
