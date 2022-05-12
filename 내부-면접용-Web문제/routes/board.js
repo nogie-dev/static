@@ -6,10 +6,9 @@ router.get('/',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        //console.log(req.sessionID)
         query.getBoardList()
         .then((queryRes)=>{
-            res.render('board_list',{board_list:queryRes})
+            res.render('board/board_list',{board_list:queryRes})
         })
     }
 })
@@ -21,8 +20,17 @@ router.get('/view/:no',(req,res)=>{
         const number=req.params.no
         query.detailViewBoard(number)
         .then((queryRes)=>{
-            res.render('board_view',{info:queryRes})
+            res.render('board/board_view',{info:queryRes})
         })
+    }
+})
+
+router.post('/preview',(req,res)=>{
+    if(!req.session.user){
+        res.json({"status":"401","msg":"Unauthorized"})
+    }else{
+        let tmp=req.body
+        res.render('board/board_preview',tmp)
     }
 })
 
@@ -30,7 +38,7 @@ router.get('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        res.render('board_write',{username:req.session.user.id})
+        res.render('board/board_write',{username:req.session.user.id})
     }
 })
 
@@ -38,23 +46,38 @@ router.post('/write',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
-        const {name,title,context}=req.body //req.body 의 key값과 변수의 이름이 동일해야 함
-        query.createBoard(name,title,context)
-        .then((queryRes)=>{
-            res.json(queryRes)
-        })
-        //res.json({name,title,context})
+        const {name,title,context}=req.body
+
+        if(title!=''&&context!=''){
+            query.createBoard(name,title,context)
+            .then((queryRes)=>{
+                res.redirect('/board')
+            })
+        }else{
+            res.render('board/board_write',{empty:true})
+        }
     }
 })
+
+//mod, del session id 와 writer id 동일한 지 확인 필요함
+//게시물에서 id를 가져와 세션id와 같으면 통과 아니면 빠꾸
 
 router.get('/mod/:no',(req,res)=>{
     if(!req.session.user){
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
-        query.detailViewBoard(number)
-        .then((queryRes)=>{
-            res.render('board_mod',{info:queryRes})
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                const number=req.params.no
+                query.detailViewBoard(number)
+                .then((queryRes)=>{
+                    res.render('board/board_mod',{info:queryRes})
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })
@@ -65,9 +88,16 @@ router.post('/mod/:no',(req,res)=>{
     }else{
         const number=req.params.no
         const {name,title,context}=req.body
-        query.updateBoard(number,name,title,context)
-        .then((queryRes)=>{
-            res.redirect(`/board/view/${number}`)
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                query.updateBoard(number,name,title,context)
+                    .then((queryRes)=>{
+                    res.redirect(`/board/view/${number}`)
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })
@@ -77,9 +107,16 @@ router.get('/del/:no',(req,res)=>{
         res.json({"status":"401","msg":"Unauthorized"})
     }else{
         const number=req.params.no
-        query.deleteBoard(number)
-        .then((queryRes)=>{
-            res.redirect('/board')
+
+        query.getBoardWriterName(number).then((name)=>{
+            if(req.session.user.id==name){
+                query.deleteBoard(number)
+                .then((queryRes)=>{
+                    res.redirect('/board')
+                })
+            }else{
+                res.json({"msg":"you are not writer"})
+            }
         })
     }
 })

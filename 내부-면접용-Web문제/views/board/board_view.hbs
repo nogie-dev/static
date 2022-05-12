@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Form Design</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="../../static/stylesheets/style.css">
+    </head>
+    <body>
+        <div class="board-form">
+            <table>
+                {{#each info}}
+                <tr>
+                    <td>
+                        <span>no : {{no}}</span>
+                    </td>
+
+                    <td>
+                        <span>username : {{name}}</span>
+                    </td>
+                    
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>{{title}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <span>{{context}}</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <form metnod="POST" action="../del/{{no}}">
+                        {{!-- <input type="hidden" value="{{no}}"> --}}
+                            <input type="submit" value="del">
+                        </form>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <form metnod="POST" action="../mod/{{no}}">
+                            {{!-- <input type="hidden" value="{{no}}"> --}}
+                            <input type="submit" value="mod">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </body>
+    </body>

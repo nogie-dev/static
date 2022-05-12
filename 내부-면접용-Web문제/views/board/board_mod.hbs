@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Form Design</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="../../static/stylesheets/style.css">
+    </head>
+
+    {{#if empty}}
+        <script>alert('title or context is empty')</script>
+    {{/if}}
+
+        <form method="POST" class="board-form">
+        {{#each info}}
+            <h1>Modify</h1>
+            
+            <h3>writer : {{name}}</h3>
+
+            <input type="hidden" name="name" value={{name}}>
+
+            <div class="textb">
+                <input type="text" value="{{title}}" name="title">
+            </div>
+
+            <div class="text_board">
+                <input type="text" value="{{context}}" name="context">
+            </div>
+
+            <button class="btn-board">수정</button>
+        {{/each}}
+    </form>

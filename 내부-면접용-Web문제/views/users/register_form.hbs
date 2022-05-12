@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login Form Design</title>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+        <link rel="stylesheet" href="../static/stylesheets/style.css">
+    </head>
+    <body>
+        <form class="login-form" method="POST">
+            <h1>Register</h1>
+
+            <div class="textb">
+                <input type="text" required name="id">
+                <div class="placeholder">아이디</div>
+            </div>
+
+            <div class="textb">
+                <input type="text" required name="nickname">
+                <div class="placeholder">닉네임</div>
+            </div>
+
+            <div class="textb">
+                <input type="password" id="pw" required name="password">
+                <div class="placeholder">비밀번호</div>
+                <div class="show-password fas"></div>
+            </div>
+
+            <div class="textb">
+                <input type="password" id="pw_check" onchange="tmp()" required>
+                <div class="placeholder">비밀번호 확인</div>
+            </div>
+
+            <div class="textb">
+                <span id="judge" style="color: red">불일치</span>
+            </div>
+
+            <button class="btn fas fa-arrow-right" id="btn" disabled></button>
+        </form>
+        {{!-- <script src="javascripts/registerFormScript.js"></script> --}}
+    </body>
+
+<script>
+    function tmp(){
+        var pw=document.getElementById('pw').value
+        var pw_check=document.getElementById('pw_check').value
+        var btn=document.getElementById('btn')
+        var judge=document.getElementById('judge')
+
+        console.log(pw)
+
+        if(pw!=pw_check){
+            judge.innerHTML='불일치'
+            judge.style.color="red"
+            btn.disabled=true
+        }else{
+            judge.innerHTML='일치'
+            judge.style.color="green"
+            btn.disabled=false
+        }
+    }
+</script>
